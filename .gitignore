@@ -16,3 +16,6 @@ catalina.base_IS_UNDEFINED/
 o2o.iml
 pom.xml
 src/
+target/generated-sources/
+target/generated-test-sources/
+/src/
