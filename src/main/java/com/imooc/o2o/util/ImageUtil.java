@@ -21,7 +21,9 @@ import java.util.Random;
  * @create: 2020/07/22
  */
 public class ImageUtil {
-    private static String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+//    private static String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+    private static String basePath = "F:/IdeaProject/o2o/src/main/resources";
+
     private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
     private static final Random r = new Random();
     private static Logger logger = LoggerFactory.getLogger(ImageUtil.class);
@@ -111,11 +113,35 @@ public class ImageUtil {
         }
     }
 
+    /**
+     * @author: ysp
+     * @description: storePath是文件的路径还是目录的路径，
+     * 如果storePath是文件路径则删除该文件，
+     * 如果storePath是目录路径则删除该目录下的所有文件
+     * @createTime: 2020/7/24 10:44
+     *
+     * @param strorePath
+     * @return void
+     */
+    public static void deleteFileOrPath(String strorePath){
+        //获取全路径，路径有可能是目录路径，有可能是文件路径
+        File fileOrPath = new File(PathUtil.getImgBasePath() + strorePath);
+        if (fileOrPath.exists()){
+            if (fileOrPath.isDirectory()){
+                File files[] = fileOrPath.listFiles();
+                for (int i =0; i < files.length; i++){
+                    files[i].delete();
+                }
+            }
+            fileOrPath.delete();
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         System.out.println(basePath);
         Thumbnails.of(new File("F:/慕课网学习/xiaohuangren.jpg"))
                 .size(200,200).watermark(Positions.BOTTOM_RIGHT,
-                ImageIO.read(new File(basePath + "watermark.jpg")),0.25f)
+                ImageIO.read(new File(basePath + "/watermark.jpg")),0.25f)
                 .outputQuality(0.8f)
                 .toFile("F:/慕课网学习/xiaohuangrennew.jpg");
     }
