@@ -55,6 +55,14 @@
             and shopCondition.shopCategory.shopCategoryId != null">
                 and s.shop_category_id = #{shopCondition.shopCategory.shopCategoryId}
             </if>
+            <if test="shopCondition.shopCategory != null
+            and shopCondition.shopCategory.parent != null
+            and shopCondition.shopCategory.parent.shopCategoryId != null">
+                and s.shop_category_id in
+                (select shop_category_id from tb_shop_category
+                WHERE parent_id =
+                #{shopCondition.shopCategory.parent.shopCategoryId})
+            </if>
             <!-- 如果区域类别不为空，并且搜索的id存在，则根据区域分类id查询-->
             <if test="shopCondition.area != null
             and shopCondition.area.areaId != null">
@@ -94,6 +102,14 @@
             <if test="shopCondition.shopCategory != null
             and shopCondition.shopCategory.shopCategoryId != null">
                 and s.shop_category_id = #{shopCondition.shopCategory.shopCategoryId}
+            </if>
+            <if test="shopCondition.shopCategory != null
+            and shopCondition.shopCategory.parent != null
+            and shopCondition.shopCategory.parent.shopCategoryId != null">
+                and s.shop_category_id in
+                (select shop_category_id from tb_shop_category
+                WHERE parent_id =
+                #{shopCondition.shopCategory.parent.shopCategoryId})
             </if>
             <!-- 如果区域类别不为空，并且搜索的id存在，则根据区域分类id查询-->
             <if test="shopCondition.area != null
